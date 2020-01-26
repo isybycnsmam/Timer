@@ -18,19 +18,27 @@ namespace Timer {
 		}
 
 		public static int GeneralMenu() {
+			Console.Clear();
 			var items = new[] { "Start", "View last 10", "Quit" };
 
 			for (int i = 0; i < items.Length; i++)
 				Console.WriteLine($"{i + 1}. {items[i]}");
 
-			int choice;
-			if (int.TryParse(Console.ReadLine(), out choice) || choice < 1 || items.Length > 4)
+			Console.Write("\nChoice: ");
+
+			int choice = 0;
+			try {
+				choice = Convert.ToInt32(Console.ReadLine());
+			}
+			catch { }
+			if (choice < 1 || items.Length > 4)
 				return GeneralMenu();
 			else
 				return choice;
 		}
 		static void Main(string[] args) {
 			for (; ; ) {
+				Console.Title = "Work timer";
 				switch (GeneralMenu()) {
 					case 1:
 						Start();
@@ -77,6 +85,7 @@ namespace Timer {
 		public static void Save(WorkEvent work) {
 			Console.WriteLine();
 
+			Console.Write(work.ToString());
 			try {
 				File.AppendAllText("work.txt", work.ToString());
 				Console.WriteLine("Saved!");
@@ -84,8 +93,6 @@ namespace Timer {
 			catch {
 				Console.WriteLine("Failed to save");
 			}
-
-			Console.WriteLine(work.ToString());
 		}
 		public static void ViewLastTen() {
 			Console.Clear();
