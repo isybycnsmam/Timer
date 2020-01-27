@@ -13,8 +13,9 @@ namespace Timer {
 		public class WorkEvent {
 			public TimeSpan Elapsed { get; set; }
 			public DateTime Start = DateTime.Now;
+			public string Comment { get; set; }
 
-			public override string ToString() => $"Start: {Start,-24} Elapsed: {Elapsed.ToString(@"hh\:mm\:ss")}\n";
+			public override string ToString() => $"Start: {Start,-24} Elapsed: {Elapsed.ToString(@"hh\:mm\:ss"),-14} \\\\{Comment}\n";
 		}
 
 		public static int GeneralMenu() {
@@ -79,6 +80,9 @@ namespace Timer {
 			}
 			stopwatch.Stop();
 			work.Elapsed = stopwatch.Elapsed;
+
+			Console.WriteLine("What have you done?");
+			work.Comment = Console.ReadLine();
 
 			Save(work);
 		}
